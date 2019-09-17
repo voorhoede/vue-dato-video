@@ -44,6 +44,7 @@ Vue.use(VueDatoVideo)
 
 ### Youtube
 
+<ClientOnly>
 ::: demo
 <vue-dato-video
   :loop="false"
@@ -60,9 +61,11 @@ Vue.use(VueDatoVideo)
   }"
 ></vue-dato-video>
 :::
+</ClientOnly>
 
 ### Vimeo
 
+<ClientOnly>
 ::: demo
 <vue-dato-video
   :loop="false"
@@ -79,6 +82,7 @@ Vue.use(VueDatoVideo)
   }"
 ></vue-dato-video>
 :::
+</ClientOnly>
 
 <!-- The API section is auto generated, don't touch please -->
 
