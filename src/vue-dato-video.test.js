@@ -15,7 +15,7 @@ test('Renders', () => {
         height: 270,
         provider: 'youtube',
         providerUid: 'AoIq7P6DJKU',
-        thumbnailUrl: 'https://i.ytimg.com/vi/AoIq7P6DJKU/hqdefault.jpg'
+        thumbnailUrl: 'https://i.ytimg.com/vi/AoIq7P6DJKU/hqdefault.jpg',
       },
     },
   })
