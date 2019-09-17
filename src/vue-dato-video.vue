@@ -4,7 +4,10 @@
       <fixed-ratio class="vue-dato-video__canvas" :width="canvasWidth" :height="canvasHeight">
         <lazy-load>
           <div class="vue-dato-video__background">
-            <div class="vue-dato-video__cover" :style="{ backgroundImage: `url(${imageUrl})`, width: coverWidth }"></div>
+            <div
+              class="vue-dato-video__cover"
+              :style="{ backgroundImage: `url(${imageUrl})`, width: coverWidth }"
+            ></div>
           </div>
         </lazy-load>
         <iframe
@@ -23,14 +26,13 @@
           :href="video.url"
           @click.prevent="play">
           <span class="vue-dato-video__a11y-sr-only">play video</span>
-          <svg
-            class="vue-dato-video__icon"
-            xmlns="http://www.w3.org/2000/svg"
-            height="60"
-            width="60"
-            viewBox="0 0 1200 1200"
-          >
-            <path d="M 600,1200 C 268.65,1200 0,931.35 0,600 0,268.65 268.65,0 600,0 c 331.35,0 600,268.65 600,600 0,331.35 -268.65,600 -600,600 z M 450,300.45 450,899.55 900,600 450,300.45 z" id="path16995" fill="#fff" />
+          <svg class="vue-dato-video__icon" xmlns="http://www.w3.org/2000/svg" height="60" width="60"
+            viewBox="0 0 1200 1200">
+            <path
+              d="M 600,1200 C 268.65,1200 0,931.35 0,600 0,268.65
+              268.65,0 600,0 c 331.35,0 600,268.65 600,600 0,331.35 -268.65,600 -600,
+              600 z M 450,300.45 450,899.55 900,600 450,300.45 z"
+              id="path16995" fill="#fff" />
           </svg>
         </a>
       </fixed-ratio>
@@ -46,8 +48,8 @@
 <script>
 import FixedRatio from '@voorhoede/vue-fixed-ratio'
 import LazyLoad from '@voorhoede/vue-lazy-load'
-import imageUrl from './lib/image-url'
-const binaryBoolean = value => (value) ? 1 : 0
+
+const binaryBoolean = (value) => ((value) ? 1 : 0)
 export default {
   components: { FixedRatio, LazyLoad },
   props: {
@@ -68,7 +70,7 @@ export default {
       required: true,
     },
   },
-  data () {
+  data() {
     return {
       isPlaying: this.autoplay,
       maxRatio: 1.5,
@@ -76,7 +78,7 @@ export default {
     }
   },
   computed: {
-    canvasHeight() { 
+    canvasHeight() {
       // prevent canvas from getting a higher ratio than 3:2 (1.5:1)
       return Math.min(this.video.width * this.maxRatio, this.video.height)
     },
@@ -84,23 +86,22 @@ export default {
       return this.video.width
     },
     coverWidth() {
-      return `${this.video.width * this.maxRatio / this.video.height * 100}%`
+      return `${((this.video.width * this.maxRatio) / this.video.height) * 100}%`
     },
     imageUrl() {
+      const sizeRegex = /_\d+(x\d+)?\.\w+$/ // match _123.ext and _123x123.ext
+      let preset = '/maxresdefault.jpg'
+
       switch (this.video.provider) {
         case 'vimeo':
-          const sizeRegex = /_\d+(x\d+)?\.\w+$/ // match _123.ext and _123x123.ext
           return this.video.thumbnailUrl.replace(sizeRegex, `_${this.width}.jpg`)
-          break;
         case 'youtube':
-          let preset = '/maxresdefault.jpg'
           if (this.width < 320) {
             preset = '/mqdefault.jpg'
           } else if (this.width < 480) {
             preset = '/hqdefault.jpg'
           }
           return this.video.thumbnailUrl.replace('/hqdefault.jpg', preset)
-          break;
         default:
           console.error(`unsupported video provider for cover image: ${this.video.provider}`);
           return ''
@@ -113,22 +114,20 @@ export default {
       switch (provider) {
         case 'vimeo':
           return `https://player.vimeo.com/video/${providerUid}?autoplay=1&muted=${binaryBoolean(mute)}&loop=${binaryBoolean(loop)}`
-          break;
         case 'youtube':
           return `https://www.youtube.com/embed/${providerUid}?autoplay=1&mute=${binaryBoolean(mute)}&loop=${binaryBoolean(loop)}&playlist=${providerUid}`
-          break;
         default:
           console.error(`unsupported video provider: ${provider}`);
           return ''
       }
-    }
+    },
   },
   methods: {
     play() {
       this.isPlaying = true
     },
   },
-   mounted() {
+  mounted() {
     const pixelRatio = window.devicePixelRatio || 1
     const cssWidth = this.$el.getBoundingClientRect().width
     this.width = cssWidth * pixelRatio
