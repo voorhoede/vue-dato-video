@@ -29,6 +29,9 @@ import VueDatoVideo from '@voorhoede/vue-dato-video'
 Vue.use(VueDatoVideo)
 ```
 
+The CSS file should be imported seperately in the way you desire. It's located at `@voorhoede/vue-dato-video/dist/vue-dato-video.css`.
+
+
 ### Browser
 
 ```html
